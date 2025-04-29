@@ -36,11 +36,19 @@
 
 /** usb hid keyboard keycode mappings */
 
-#define DESK_RAISE_TO_TOP_KEYCODE           53
-#define DESK_LOWER_TO_BOTTOM_KEYCODE        52
-#define DESK_CONFIGURE_KEYCODE              51
-#define DESK_RAISE_MOMENTARY_KEYCODE        50
-#define DESK_LOWER_MOMENTARY_KEYCODE        49
+#define DESK_KEYPAD_KEY1                    53
+#define DESK_KEYPAD_KEY2                    52
+#define DESK_KEYPAD_KEY3                    51
+#define DESK_KEYPAD_KEY4                    50
+#define DESK_KEYPAD_KEY5                    49
+
+/** keymappings */
+#define DESK_RAISE_TO_TOP_KEYCODE           DESK_KEYPAD_KEY2
+#define DESK_LOWER_TO_BOTTOM_KEYCODE        DESK_KEYPAD_KEY1
+#define DESK_CONFIGURE_KEYCODE              DESK_KEYPAD_KEY3
+#define DESK_RAISE_MOMENTARY_KEYCODE        DESK_KEYPAD_KEY5
+#define DESK_LOWER_MOMENTARY_KEYCODE        DESK_KEYPAD_KEY4
+
 
 #define GPIO_LEVEL_HIGH                     1
 #define GPIO_LEVEL_LOW                      0
@@ -667,11 +675,11 @@ void desk_button_next_state_reset(void)
 
 void reset_gpios_for_desk(void)
 {
-    gpio_set_level(DESK_RAISE_MOMENTARY_BUTTON_PIN, 1);
-    gpio_set_level(DESK_LOWER_MOMENTARY_BUTTON_PIN, 1);
-    gpio_set_level(DESK_LOWER_TO_BOTTOM_BUTTON_PIN, 1);
-    gpio_set_level(DESK_RAISE_TO_TOP_BUTTON_PIN, 1);
-    gpio_set_level(DESK_CONFIGURE_BUTTON_PIN, 1);
+    gpio_set_level(DESK_RAISE_MOMENTARY_BUTTON_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(DESK_LOWER_MOMENTARY_BUTTON_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(DESK_LOWER_TO_BOTTOM_BUTTON_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(DESK_RAISE_TO_TOP_BUTTON_PIN, GPIO_LEVEL_HIGH);
+    gpio_set_level(DESK_CONFIGURE_BUTTON_PIN, GPIO_LEVEL_HIGH);
 }
 
 void update_gpios_for_desk(void)
@@ -735,7 +743,6 @@ void app_main(void)
     gpio_set_level(DESK_CONFIGURE_BUTTON_PIN, GPIO_LEVEL_HIGH);
     gpio_set_pull_mode(DESK_CONFIGURE_BUTTON_PIN, GPIO_PULLDOWN_ENABLE);
 
-    reset_gpios_for_desk();
 
     BaseType_t task_created;
     app_event_queue_t evt_queue;
